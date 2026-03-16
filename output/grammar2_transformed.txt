@@ -1,0 +1,6 @@
+--- Transformed Context Free Grammar ---
+E -> T Eprime
+T -> F Tprime
+F -> ( E ) | id
+Eprime -> + T Eprime | epsilon
+Tprime -> * F Tprime | epsilon

@@ -1,0 +1,44 @@
+--- Parsing Input: id + id * id ---
+STACK                                    INPUT                          ACTION                        
+$ E                                      id + id * id $                 Output E -> T Eprime
+$ Eprime T                               id + id * id $                 Output T -> F Tprime
+$ Eprime Tprime F                        id + id * id $                 Output F -> id
+$ Eprime Tprime id                       id + id * id $                 Match id
+$ Eprime Tprime                          + id * id $                    Output Tprime -> epsilon
+$ Eprime                                 + id * id $                    Output Eprime -> + T Eprime
+$ Eprime T +                             + id * id $                    Match +
+$ Eprime T                               id * id $                      Output T -> F Tprime
+$ Eprime Tprime F                        id * id $                      Output F -> id
+$ Eprime Tprime id                       id * id $                      Match id
+$ Eprime Tprime                          * id $                         Output Tprime -> * F Tprime
+$ Eprime Tprime F *                      * id $                         Match *
+$ Eprime Tprime F                        id $                           Output F -> id
+$ Eprime Tprime id                       id $                           Match id
+$ Eprime Tprime                          $                              Output Tprime -> epsilon
+$ Eprime                                 $                              Output Eprime -> epsilon
+$                                        $                              Accept!
+----------------------------------------
+
+=== PARSE TREE ===
+└── E
+    ├── T
+    │   ├── F
+    │   │   └── id
+    │   └── Tprime
+    │       └── epsilon
+    └── Eprime
+        ├── +
+        ├── T
+        │   ├── F
+        │   │   └── id
+        │   └── Tprime
+        │       ├── *
+        │       ├── F
+        │       │   └── id
+        │       └── Tprime
+        │           └── epsilon
+        └── Eprime
+            └── epsilon
+
+====================================================
+

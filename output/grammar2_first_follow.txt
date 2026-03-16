@@ -1,0 +1,13 @@
+--- FIRST Sets ---
+FIRST(E) = [(, id]
+FIRST(T) = [(, id]
+FIRST(F) = [(, id]
+FIRST(Eprime) = [epsilon, +]
+FIRST(Tprime) = [epsilon, *]
+
+--- FOLLOW Sets ---
+FOLLOW(E) = [$, )]
+FOLLOW(T) = [$, ), +]
+FOLLOW(F) = [$, ), *, +]
+FOLLOW(Eprime) = [$, )]
+FOLLOW(Tprime) = [$, ), +]

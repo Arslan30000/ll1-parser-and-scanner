@@ -1,0 +1,18 @@
+--- Parsing Input: + id * ---
+STACK                                    INPUT                          ACTION                        
+$ E                                      + id * $                       Error: Unexpected token +. (Skipping input)
+$ E                                      id * $                         Output E -> T Eprime
+$ Eprime T                               id * $                         Output T -> F Tprime
+$ Eprime Tprime F                        id * $                         Output F -> id
+$ Eprime Tprime id                       id * $                         Match id
+$ Eprime Tprime                          * $                            Output Tprime -> * F Tprime
+$ Eprime Tprime F *                      * $                            Match *
+$ Eprime Tprime F                        $                              Error: Unexpected token $. (Skipping input)
+----------------------------------------
+
+=== SYNTAX ERRORS ===
+- Error: Unexpected token +. (Skipping input)
+- Error: Unexpected token $. (Skipping input)
+
+====================================================
+
