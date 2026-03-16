@@ -1,17 +1,69 @@
+--- Parsing Input: id + * id ---
+STACK                                    INPUT                          ACTION                        
+$ Expr                                   id + * id $                    Output Expr -> Term Exprprime
+$ Exprprime Term                         id + * id $                    Output Term -> Factor Termprime
+$ Exprprime Termprime Factor             id + * id $                    Output Factor -> id
+$ Exprprime Termprime id                 id + * id $                    Match id
+$ Exprprime Termprime                    + * id $                       Output Termprime -> epsilon
+$ Exprprime                              + * id $                       Output Exprprime -> + Term Exprprime
+$ Exprprime Term +                       + * id $                       Match +
+$ Exprprime Term                         * id $                         Error: Unexpected token *. (Skipping input)
+$ Exprprime Term                         id $                           Output Term -> Factor Termprime
+$ Exprprime Termprime Factor             id $                           Output Factor -> id
+$ Exprprime Termprime id                 id $                           Match id
+$ Exprprime Termprime                    $                              Output Termprime -> epsilon
+$ Exprprime                              $                              Output Exprprime -> epsilon
+$                                        $                              Accept!
+----------------------------------------
+
+=== SYNTAX ERRORS ===
+- Error: Unexpected token *. (Skipping input)
+
+====================================================
+
 --- Parsing Input: + id * ---
 STACK                                    INPUT                          ACTION                        
-$ E                                      + id * $                       Error: Unexpected token +. (Skipping input)
-$ E                                      id * $                         Output E -> T Eprime
-$ Eprime T                               id * $                         Output T -> F Tprime
-$ Eprime Tprime F                        id * $                         Output F -> id
-$ Eprime Tprime id                       id * $                         Match id
-$ Eprime Tprime                          * $                            Output Tprime -> * F Tprime
-$ Eprime Tprime F *                      * $                            Match *
-$ Eprime Tprime F                        $                              Error: Unexpected token $. (Skipping input)
+$ Expr                                   + id * $                       Error: Unexpected token +. (Skipping input)
+$ Expr                                   id * $                         Output Expr -> Term Exprprime
+$ Exprprime Term                         id * $                         Output Term -> Factor Termprime
+$ Exprprime Termprime Factor             id * $                         Output Factor -> id
+$ Exprprime Termprime id                 id * $                         Match id
+$ Exprprime Termprime                    * $                            Output Termprime -> * Factor Termprime
+$ Exprprime Termprime Factor *           * $                            Match *
+$ Exprprime Termprime Factor             $                              Error: Unexpected token $. (Skipping input)
 ----------------------------------------
 
 === SYNTAX ERRORS ===
 - Error: Unexpected token +. (Skipping input)
+- Error: Unexpected token $. (Skipping input)
+
+====================================================
+
+--- Parsing Input: id id ---
+STACK                                    INPUT                          ACTION                        
+$ Expr                                   id id $                        Output Expr -> Term Exprprime
+$ Exprprime Term                         id id $                        Output Term -> Factor Termprime
+$ Exprprime Termprime Factor             id id $                        Output Factor -> id
+$ Exprprime Termprime id                 id id $                        Match id
+$ Exprprime Termprime                    id $                           Error: Unexpected token id. (Skipping input)
+$ Exprprime Termprime                    $                              Output Termprime -> epsilon
+$ Exprprime                              $                              Output Exprprime -> epsilon
+$                                        $                              Accept!
+----------------------------------------
+
+=== SYNTAX ERRORS ===
+- Error: Unexpected token id. (Skipping input)
+
+====================================================
+
+--- Parsing Input: $ ---
+STACK                                    INPUT                          ACTION                        
+$ Expr                                   $ $                            Error: Unexpected token $. (Skipping input)
+$ Expr                                   $                              Error: Unexpected token $. (Skipping input)
+----------------------------------------
+
+=== SYNTAX ERRORS ===
+- Error: Unexpected token $. (Skipping input)
 - Error: Unexpected token $. (Skipping input)
 
 ====================================================

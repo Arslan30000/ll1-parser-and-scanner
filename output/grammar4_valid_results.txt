@@ -1,0 +1,51 @@
+--- Parsing Input: b ---
+STACK                                    INPUT                          ACTION                        
+$ Start                                  b $                            Output Start -> b
+$ b                                      b $                            Match b
+$                                        $                              Accept!
+----------------------------------------
+
+=== PARSE TREE ===
+└── Start
+    └── b
+
+====================================================
+
+--- Parsing Input: b d a ---
+STACK                                    INPUT                          ACTION                        
+$ Start                                  b d a $                        Output Start -> b
+$ b                                      b d a $                        Match b
+$                                        d a $                          Error: Expected $ but found d. (Popping stack)
+----------------------------------------
+
+=== SYNTAX ERRORS ===
+- Error: Expected $ but found d. (Popping stack)
+
+====================================================
+
+--- Parsing Input: c c a ---
+STACK                                    INPUT                          ACTION                        
+$ Start                                  c c a $                        Output Start -> Alpha a
+$ a Alpha                                c c a $                        Output Alpha -> Alphaprime
+$ a Alphaprime                           c c a $                        Output Alphaprime -> c Alphaprime
+$ a Alphaprime c                         c c a $                        Match c
+$ a Alphaprime                           c a $                          Output Alphaprime -> c Alphaprime
+$ a Alphaprime c                         c a $                          Match c
+$ a Alphaprime                           a $                            Output Alphaprime -> epsilon
+$ a                                      a $                            Match a
+$                                        $                              Accept!
+----------------------------------------
+
+=== PARSE TREE ===
+└── Start
+    ├── Alpha
+    │   └── Alphaprime
+    │       ├── c
+    │       └── Alphaprime
+    │           ├── c
+    │           └── Alphaprime
+    │               └── epsilon
+    └── a
+
+====================================================
+

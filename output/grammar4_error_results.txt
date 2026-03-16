@@ -1,0 +1,27 @@
+--- Parsing Input: b d c ---
+STACK                                    INPUT                          ACTION                        
+$ Start                                  b d c $                        Output Start -> b
+$ b                                      b d c $                        Match b
+$                                        d c $                          Error: Expected $ but found d. (Popping stack)
+----------------------------------------
+
+=== SYNTAX ERRORS ===
+- Error: Expected $ but found d. (Popping stack)
+
+====================================================
+
+--- Parsing Input: d a ---
+STACK                                    INPUT                          ACTION                        
+$ Start                                  d a $                          Error: Unexpected token d. (Skipping input)
+$ Start                                  a $                            Output Start -> Alpha a
+$ a Alpha                                a $                            Output Alpha -> Alphaprime
+$ a Alphaprime                           a $                            Output Alphaprime -> epsilon
+$ a                                      a $                            Match a
+$                                        $                              Accept!
+----------------------------------------
+
+=== SYNTAX ERRORS ===
+- Error: Unexpected token d. (Skipping input)
+
+====================================================
+

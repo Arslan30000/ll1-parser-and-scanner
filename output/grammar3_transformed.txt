@@ -1,0 +1,4 @@
+--- Transformed Context Free Grammar ---
+Stmt -> a | if Cond then Stmt Stmtprime
+Cond -> b
+Stmtprime -> epsilon | else Stmt

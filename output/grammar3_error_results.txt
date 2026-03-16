@@ -1,0 +1,40 @@
+--- Parsing Input: if b a ---
+STACK                                    INPUT                          ACTION                        
+$ Stmt                                   if b a $                       Output Stmt -> if Cond then Stmt Stmtprime
+$ Stmtprime Stmt then Cond if            if b a $                       Match if
+$ Stmtprime Stmt then Cond               b a $                          Output Cond -> b
+$ Stmtprime Stmt then b                  b a $                          Match b
+$ Stmtprime Stmt then                    a $                            Error: Expected then but found a. (Popping stack)
+$ Stmtprime Stmt                         a $                            Output Stmt -> a
+$ Stmtprime a                            a $                            Match a
+$ Stmtprime                              $                              Output Stmtprime -> epsilon
+$                                        $                              Accept!
+----------------------------------------
+
+=== SYNTAX ERRORS ===
+- Error: Expected then but found a. (Popping stack)
+
+====================================================
+
+--- Parsing Input: if b then a else else a ---
+STACK                                    INPUT                          ACTION                        
+$ Stmt                                   if b then a else else a $      Output Stmt -> if Cond then Stmt Stmtprime
+$ Stmtprime Stmt then Cond if            if b then a else else a $      Match if
+$ Stmtprime Stmt then Cond               b then a else else a $         Output Cond -> b
+$ Stmtprime Stmt then b                  b then a else else a $         Match b
+$ Stmtprime Stmt then                    then a else else a $           Match then
+$ Stmtprime Stmt                         a else else a $                Output Stmt -> a
+$ Stmtprime a                            a else else a $                Match a
+$ Stmtprime                              else else a $                  Output Stmtprime -> else Stmt
+$ Stmt else                              else else a $                  Match else
+$ Stmt                                   else a $                       Error: Unexpected token else. (Skipping input)
+$ Stmt                                   a $                            Output Stmt -> a
+$ a                                      a $                            Match a
+$                                        $                              Accept!
+----------------------------------------
+
+=== SYNTAX ERRORS ===
+- Error: Unexpected token else. (Skipping input)
+
+====================================================
+

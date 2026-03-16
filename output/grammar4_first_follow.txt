@@ -1,0 +1,9 @@
+--- FIRST Sets ---
+FIRST(Start) = [a, b, c]
+FIRST(Alpha) = [epsilon, a, b, c]
+FIRST(Alphaprime) = [epsilon, a, c]
+
+--- FOLLOW Sets ---
+FOLLOW(Start) = [$]
+FOLLOW(Alpha) = [a]
+FOLLOW(Alphaprime) = [a]

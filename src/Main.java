@@ -9,16 +9,13 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         try {
-            // Ensure output directory exists
             new File("output").mkdirs();
 
-            // Process Grammar 1 (Standard)
-            processGrammarPipeline("grammar1");
-            
-            // Process Grammar 2 (Left Recursive)
-            processGrammarPipeline("grammar2");
+            for (int i = 1; i <= 4; i++) {
+                processGrammarPipeline("grammar" + i);
+            }
 
-            System.out.println("\n✅ Processing complete! All deliverables printed above and saved in the 'output' folder.");
+            System.out.println("\n Processing complete! All deliverables printed above and saved in the 'output' folder.");
 
         } catch (Exception e) {
             System.err.println("Fatal Error: " + e.getMessage());
@@ -37,32 +34,28 @@ public class Main {
             return;
         }
 
-        // 1. Load and Transform
         Grammar g = new Grammar();
         g.loadFromFile("input/" + grammarName + ".txt");
         GrammarTransformer.eliminateLeftRecursion(g);
         GrammarTransformer.applyLeftFactoring(g);
         
         String transformedGrammar = getGrammarString(g);
-        System.out.println(transformedGrammar); // PRINT TO CONSOLE
+        System.out.println(transformedGrammar); 
         writeToFile("output/" + grammarName + "_transformed.txt", transformedGrammar);
 
-        // 2. Compute Sets
         FirstFollow ff = new FirstFollow(g);
         ff.computeFirstSets();
         ff.computeFollowSets();
         
         String setsString = getSetsString(ff, g);
-        System.out.println(setsString); // PRINT TO CONSOLE
+        System.out.println(setsString);
         writeToFile("output/" + grammarName + "_first_follow.txt", setsString);
 
-        // 3. Build Parser Table
         Parser parser = new Parser(g, ff);
         String tableString = parser.getTableString();
-        System.out.println(tableString); // PRINT TO CONSOLE
+        System.out.println(tableString); 
         writeToFile("output/" + grammarName + "_parsing_table.txt", tableString);
 
-        // 4. Process Separated Input Files
         System.out.println("--- Parsing Valid Inputs for " + grammarName + " ---");
         processInputs("input/" + grammarName + "_valid.txt", "output/" + grammarName + "_valid_results.txt", parser);
         
@@ -87,17 +80,14 @@ public class Main {
             ErrorHandler errorHandler = new ErrorHandler();
             Tree tree = parser.parse(tokens, errorHandler);
             
-            // Build the output block for this specific input string
             StringBuilder singleResult = new StringBuilder();
             singleResult.append(parser.getLastTrace()).append("\n");
             
-            // Append Parse Tree if successful
             if (tree != null && !errorHandler.hasErrors()) {
                 singleResult.append("=== PARSE TREE ===\n");
                 singleResult.append(tree.getTreeString("", true)).append("\n");
             }
             
-            // Append Errors if Panic Mode triggered
             if (errorHandler.hasErrors()) {
                 singleResult.append(errorHandler.getErrorReport()).append("\n");
             }
@@ -108,7 +98,6 @@ public class Main {
             fileResults.append(resultStr).append("\n"); // APPEND FOR FILE
         }
         
-        // Write the combined results for all strings in the file to the output folder
         writeToFile(outputPath, fileResults.toString());
     }
 
@@ -118,7 +107,6 @@ public class Main {
         }
     }
 
-    // Helper methods to convert print statements to Strings for file writing
     private static String getGrammarString(Grammar g) {
         StringBuilder sb = new StringBuilder("--- Transformed Context Free Grammar ---\n");
         for (String nt : g.rules.keySet()) {

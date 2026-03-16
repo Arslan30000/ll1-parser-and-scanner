@@ -1,6 +1,6 @@
 --- Transformed Context Free Grammar ---
-E -> T Eprime
-T -> F Tprime
-F -> ( E ) | id
-Eprime -> + T Eprime | epsilon
-Tprime -> * F Tprime | epsilon
+Expr -> Term Exprprime
+Term -> Factor Termprime
+Factor -> ( Expr ) | id
+Exprprime -> + Term Exprprime | epsilon
+Termprime -> * Factor Termprime | epsilon

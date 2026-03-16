@@ -1,15 +1,15 @@
 --- LL(1) Parsing Table ---
-M[T, (] = T -> F Tprime
-M[T, id] = T -> F Tprime
-M[Eprime, $] = Eprime -> epsilon
-M[Eprime, )] = Eprime -> epsilon
-M[Eprime, +] = Eprime -> + T Eprime
-M[E, (] = E -> T Eprime
-M[E, id] = E -> T Eprime
-M[F, (] = F -> ( E )
-M[F, id] = F -> id
-M[Tprime, $] = Tprime -> epsilon
-M[Tprime, )] = Tprime -> epsilon
-M[Tprime, *] = Tprime -> * F Tprime
-M[Tprime, +] = Tprime -> epsilon
+M[Termprime, $] = Termprime -> epsilon
+M[Termprime, )] = Termprime -> epsilon
+M[Termprime, *] = Termprime -> * Factor Termprime
+M[Termprime, +] = Termprime -> epsilon
+M[Expr, (] = Expr -> Term Exprprime
+M[Expr, id] = Expr -> Term Exprprime
+M[Factor, (] = Factor -> ( Expr )
+M[Factor, id] = Factor -> id
+M[Term, (] = Term -> Factor Termprime
+M[Term, id] = Term -> Factor Termprime
+M[Exprprime, $] = Exprprime -> epsilon
+M[Exprprime, )] = Exprprime -> epsilon
+M[Exprprime, +] = Exprprime -> + Term Exprprime
 ---------------------------

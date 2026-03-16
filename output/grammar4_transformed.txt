@@ -1,0 +1,4 @@
+--- Transformed Context Free Grammar ---
+Start -> Alpha a | b
+Alpha -> b d Alphaprime | Alphaprime
+Alphaprime -> c Alphaprime | a d Alphaprime | epsilon

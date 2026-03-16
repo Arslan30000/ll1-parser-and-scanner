@@ -1,44 +1,37 @@
---- Parsing Input: id + id * id ---
+--- Parsing Input: a b ---
 STACK                                    INPUT                          ACTION                        
-$ E                                      id + id * id $                 Output E -> T Eprime
-$ Eprime T                               id + id * id $                 Output T -> F Tprime
-$ Eprime Tprime F                        id + id * id $                 Output F -> id
-$ Eprime Tprime id                       id + id * id $                 Match id
-$ Eprime Tprime                          + id * id $                    Output Tprime -> epsilon
-$ Eprime                                 + id * id $                    Output Eprime -> + T Eprime
-$ Eprime T +                             + id * id $                    Match +
-$ Eprime T                               id * id $                      Output T -> F Tprime
-$ Eprime Tprime F                        id * id $                      Output F -> id
-$ Eprime Tprime id                       id * id $                      Match id
-$ Eprime Tprime                          * id $                         Output Tprime -> * F Tprime
-$ Eprime Tprime F *                      * id $                         Match *
-$ Eprime Tprime F                        id $                           Output F -> id
-$ Eprime Tprime id                       id $                           Match id
-$ Eprime Tprime                          $                              Output Tprime -> epsilon
-$ Eprime                                 $                              Output Eprime -> epsilon
+$ Start                                  a b $                          Output Start -> First Second
+$ Second First                           a b $                          Output First -> a
+$ Second a                               a b $                          Match a
+$ Second                                 b $                            Output Second -> b
+$ b                                      b $                            Match b
 $                                        $                              Accept!
 ----------------------------------------
 
 === PARSE TREE ===
-└── E
-    ├── T
-    │   ├── F
-    │   │   └── id
-    │   └── Tprime
-    │       └── epsilon
-    └── Eprime
-        ├── +
-        ├── T
-        │   ├── F
-        │   │   └── id
-        │   └── Tprime
-        │       ├── *
-        │       ├── F
-        │       │   └── id
-        │       └── Tprime
-        │           └── epsilon
-        └── Eprime
-            └── epsilon
+└── Start
+    ├── First
+    │   └── a
+    └── Second
+        └── b
+
+====================================================
+
+--- Parsing Input: b ---
+STACK                                    INPUT                          ACTION                        
+$ Start                                  b $                            Output Start -> First Second
+$ Second First                           b $                            Output First -> epsilon
+$ Second                                 b $                            Output Second -> b
+$ b                                      b $                            Match b
+$                                        $                              Accept!
+----------------------------------------
+
+=== PARSE TREE ===
+└── Start
+    ├── First
+    │   └── epsilon
+    └── Second
+        └── b
 
 ====================================================
 

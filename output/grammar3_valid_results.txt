@@ -1,0 +1,101 @@
+--- Parsing Input: if b then a ---
+STACK                                    INPUT                          ACTION                        
+$ Stmt                                   if b then a $                  Output Stmt -> if Cond then Stmt Stmtprime
+$ Stmtprime Stmt then Cond if            if b then a $                  Match if
+$ Stmtprime Stmt then Cond               b then a $                     Output Cond -> b
+$ Stmtprime Stmt then b                  b then a $                     Match b
+$ Stmtprime Stmt then                    then a $                       Match then
+$ Stmtprime Stmt                         a $                            Output Stmt -> a
+$ Stmtprime a                            a $                            Match a
+$ Stmtprime                              $                              Output Stmtprime -> epsilon
+$                                        $                              Accept!
+----------------------------------------
+
+=== PARSE TREE ===
+└── Stmt
+    ├── if
+    ├── Cond
+    │   └── b
+    ├── then
+    ├── Stmt
+    │   └── a
+    └── Stmtprime
+        └── epsilon
+
+====================================================
+
+--- Parsing Input: if b then a else a ---
+STACK                                    INPUT                          ACTION                        
+$ Stmt                                   if b then a else a $           Output Stmt -> if Cond then Stmt Stmtprime
+$ Stmtprime Stmt then Cond if            if b then a else a $           Match if
+$ Stmtprime Stmt then Cond               b then a else a $              Output Cond -> b
+$ Stmtprime Stmt then b                  b then a else a $              Match b
+$ Stmtprime Stmt then                    then a else a $                Match then
+$ Stmtprime Stmt                         a else a $                     Output Stmt -> a
+$ Stmtprime a                            a else a $                     Match a
+$ Stmtprime                              else a $                       Output Stmtprime -> else Stmt
+$ Stmt else                              else a $                       Match else
+$ Stmt                                   a $                            Output Stmt -> a
+$ a                                      a $                            Match a
+$                                        $                              Accept!
+----------------------------------------
+
+=== PARSE TREE ===
+└── Stmt
+    ├── if
+    ├── Cond
+    │   └── b
+    ├── then
+    ├── Stmt
+    │   └── a
+    └── Stmtprime
+        ├── else
+        └── Stmt
+            └── a
+
+====================================================
+
+--- Parsing Input: if b then if b then a else a ---
+STACK                                    INPUT                          ACTION                        
+$ Stmt                                   if b then if b then a else a $ Output Stmt -> if Cond then Stmt Stmtprime
+$ Stmtprime Stmt then Cond if            if b then if b then a else a $ Match if
+$ Stmtprime Stmt then Cond               b then if b then a else a $    Output Cond -> b
+$ Stmtprime Stmt then b                  b then if b then a else a $    Match b
+$ Stmtprime Stmt then                    then if b then a else a $      Match then
+$ Stmtprime Stmt                         if b then a else a $           Output Stmt -> if Cond then Stmt Stmtprime
+$ Stmtprime Stmtprime Stmt then Cond if  if b then a else a $           Match if
+$ Stmtprime Stmtprime Stmt then Cond     b then a else a $              Output Cond -> b
+$ Stmtprime Stmtprime Stmt then b        b then a else a $              Match b
+$ Stmtprime Stmtprime Stmt then          then a else a $                Match then
+$ Stmtprime Stmtprime Stmt               a else a $                     Output Stmt -> a
+$ Stmtprime Stmtprime a                  a else a $                     Match a
+$ Stmtprime Stmtprime                    else a $                       Output Stmtprime -> else Stmt
+$ Stmtprime Stmt else                    else a $                       Match else
+$ Stmtprime Stmt                         a $                            Output Stmt -> a
+$ Stmtprime a                            a $                            Match a
+$ Stmtprime                              $                              Output Stmtprime -> epsilon
+$                                        $                              Accept!
+----------------------------------------
+
+=== PARSE TREE ===
+└── Stmt
+    ├── if
+    ├── Cond
+    │   └── b
+    ├── then
+    ├── Stmt
+    │   ├── if
+    │   ├── Cond
+    │   │   └── b
+    │   ├── then
+    │   ├── Stmt
+    │   │   └── a
+    │   └── Stmtprime
+    │       ├── else
+    │       └── Stmt
+    │           └── a
+    └── Stmtprime
+        └── epsilon
+
+====================================================
+

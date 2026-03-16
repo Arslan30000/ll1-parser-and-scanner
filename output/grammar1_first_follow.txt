@@ -1,13 +1,9 @@
 --- FIRST Sets ---
-FIRST(E) = [(, id]
-FIRST(Eprime) = [epsilon, +]
-FIRST(T) = [(, id]
-FIRST(Tprime) = [epsilon, *]
-FIRST(F) = [(, id]
+FIRST(Start) = [a, b]
+FIRST(First) = [epsilon, a]
+FIRST(Second) = [b]
 
 --- FOLLOW Sets ---
-FOLLOW(E) = [$, )]
-FOLLOW(Eprime) = [$, )]
-FOLLOW(T) = [$, ), +]
-FOLLOW(Tprime) = [$, ), +]
-FOLLOW(F) = [$, ), *, +]
+FOLLOW(Start) = [$]
+FOLLOW(First) = [b]
+FOLLOW(Second) = [$]
